@@ -18,20 +18,26 @@
 // export default Home;
 
 import { CiBellOn } from "react-icons/ci";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchBar from "../components/SearchBar";
 import MovieList from "../components/MovieList";
 
 const Home = () => {
-  // eslint-disable-next-line no-unused-vars
-  const [movies, setMovies] = useState([
-    { id: 1, title: "Movie One", releaseDate: "2022-01-01", rating: "8.5" },
-    { id: 2, title: "Movie Two", releaseDate: "2021-05-12", rating: "7.9" },
-    { id: 3, title: "Movie Three", releaseDate: "2021-07-12", rating: "7.9" },
-    { id: 4, title: "Movie 4", releaseDate: "2021-05-12", rating: "7.9" },
-  ]);
-  const [searchResults, setSearchResults] = useState(movies);
+  const [movies, setMovies] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
 
+  // Fetch movies from the JSON file
+  useEffect(() => {
+    fetch("/movies.json")
+      .then((response) => response.json())
+      .then((data) => {
+        setMovies(data);
+        setSearchResults(data); // Set initial search results to all movies
+      })
+      .catch((error) => console.error("Error fetching movies:", error));
+  }, []);
+
+  // Handle search functionality
   const handleSearch = (query) => {
     const filteredMovies = movies.filter((movie) =>
       movie.title.toLowerCase().includes(query.toLowerCase())
@@ -49,13 +55,12 @@ const Home = () => {
             Subscribe <CiBellOn className="mt-1 ml-2" />
           </button>
         </div>
-
-         {/* SearchBar component */}
-         <SearchBar onSearch={handleSearch} />
+        {/* SearchBar component */}
+        <SearchBar onSearch={handleSearch} />
         {/* MovieList component */}
         <MovieList movies={searchResults} />
-       </div>
-     </div>
+      </div>
+    </div>
   );
 };
 
