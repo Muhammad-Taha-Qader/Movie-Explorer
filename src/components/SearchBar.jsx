@@ -9,7 +9,7 @@ const SearchBar = ({ onSearch }) => {
     };
   
     return (
-      <form onSubmit={handleSearch} className="flex items-center space-x-2">
+      <form onSubmit={handleSearch} className="flex items-center justify-center py-6 space-x-2">
         <input
           type="text"
           placeholder="Search Movies"
