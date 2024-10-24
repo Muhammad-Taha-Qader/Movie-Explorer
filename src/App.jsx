@@ -4,10 +4,14 @@ import FavoriteMovie from './pages/FavoritesPage';
 import MovieDetails from './pages/MovieDetailsPage';
 import TopNav from './components/TopNav/TopNav';
 import Footer from './components/Footer/Footer';
+// import { FavoritesProvider } from "./contexts/FavoritesContext";
+import { FavoritesProvider } from "./contexts/FavoritesContext.jsx"; // Updated to .jsx
+
 
 const App = () => {
     return (
         <Router>
+            <FavoritesProvider>
             <TopNav/>
             <div className="main-content">
               <Routes>
@@ -17,6 +21,7 @@ const App = () => {
               </Routes>
             </div>
             <Footer/>
+            </FavoritesProvider>
         </Router>
     );
 };
